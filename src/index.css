@@ -1,37 +1,107 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-
-  color-scheme: light dark;
-  color: rgba(9, 8, 8, 0.87);
-  background-color: #242424;
-
-}
-section{
-  padding: 2rem;
-}
-section.general-info{
-  background-color: cornflowerblue;
-}
-.name > h1{
-  font-size: 3rem;
-}
-.container{
-  margin: 0 auto;
-  /* padding: 2rem; */
-  max-width: 1000px;
-  width: 100%;
-  background-color: white;
-}
-.row{
-  display: flex; 
-  align-items: center;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    color-scheme: light dark;
+    color: rgba(9, 8, 8, 0.87);
+    background-color: #3f3d3d;
 }
 
-.name{
-  width: 50%;
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
-.contacts{
-  width: 50%;
-  text-align: right;
-  justify-self: flex-end;
+
+
+/* Layout styles */
+
+.row {
+    display: flex;
+    /* align-items: center; */
+}
+
+.container {
+    margin: 0 auto;
+    /* padding: 2rem; */
+    max-width: 1600px;
+    width: 100%;
+    background-color: #3f3d3d;
+}
+
+
+/* Tag styles */
+
+main {
+    justify-content: space-between;
+    gap: 2rem;
+    height: 100vh;
+    padding: .5rem 0;
+}
+
+section {
+    padding: 2rem;
+}
+
+section.general-info {
+    background-color: cornflowerblue;
+}
+
+h1 {
+    margin-bottom: .5rem;
+}
+
+label {
+    font-weight: bold;
+}
+
+input,
+textarea {
+    padding: .5rem;
+}
+
+textarea {
+    width: 100%;
+    resize: none;
+}
+
+.name>h1 {
+    font-size: 3rem;
+}
+
+.cv_generator-form {
+    overflow-y: scroll;
+    width: 40%;
+    background-color: #fdfdfd;
+    padding: 1.5rem 2rem;
+}
+
+.person-info,
+.education-info {
+    padding-bottom: 3rem;
+}
+
+.fullname-input {
+    gap: .5rem;
+}
+
+.input-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-top: .4rem;
+}
+
+.cv {
+    width: 50%;
+    background-color: #fdfdfd;
+    overflow-y: scroll;
+}
+
+.input-wrapper.name {
+    width: 50%;
+}
+
+.contacts {
+    width: 50%;
+    text-align: right;
+    justify-self: flex-end;
 }
