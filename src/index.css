@@ -69,7 +69,7 @@ textarea {
 
 .cv_generator-form {
     overflow-y: scroll;
-    width: 40%;
+    width: 100%;
     background-color: #fdfdfd;
     padding: 1.5rem 2rem;
 }
@@ -91,11 +91,13 @@ textarea {
 }
 
 .cv {
-    width: 50%;
+    width: 100%;
     background-color: #fdfdfd;
     overflow-y: scroll;
 }
-
+.my-info{
+    justify-content: space-between;
+}
 .input-wrapper.name {
     width: 50%;
 }
