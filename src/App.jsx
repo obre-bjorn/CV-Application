@@ -4,6 +4,8 @@ import html2pdf from 'html2pdf.js'
 import GeneralInfoForm from './components/GeneralInfoForm';
 import GeneralInfo from './components/GeneralInfo';
 import ItemListView from './components/ItemListView';
+import EducationForm from './components/EducationForm';
+import XpForm from './components/XpForm';
 
 let schoolIndex = 0
 let xpIndex = 0
@@ -11,6 +13,7 @@ let xpIndex = 0
 
 function App() {
     const [schools,setSchools] = useState([])
+    const[xps,setXps] = useState([])
     const [personInfo,setPersonInfo] = useState({
       firstName:'', 
       lastName:'',
@@ -38,17 +41,28 @@ function App() {
     e.preventDefault()
 
     setSchools((prevSchools) => [...prevSchools,formData])
-
-    
-    console.log(e.target.elements)
-    console.log(formData);
-    console.log('School Index', schoolIndex)
     
     e.target.reset()
 
  }
 
- function handleXpSubmit(){
+  function handleXpSubmit(e){
+    const elements = e.target.elements
+
+    const formData = {
+      id: xpIndex,
+      from: elements['work-from'].value,
+      to: elements['work-to'].value,
+      position: elements['position'].value,
+      company: elements['company'].value
+    }
+
+    xpIndex++
+    e.preventDefault()
+
+    setXps((prevXps) => [...prevXps,formData])
+    
+    e.target.reset()
 
  }
 
@@ -68,148 +82,34 @@ function handleChange(e){
     <>
     <div className="container">
     <main className='row'> 
-     <div className='cv_generator-form'>
-      <GeneralInfoForm handleChange={handleChange} person={personInfo} />
+    
+      <div className='cv_generator-form'>
 
-      {/* Education Form */}
-        <div className="education-info">
-          <h1>Education</h1>
-          <hr />
+        {/* General Info Form */}
+        <GeneralInfoForm handleChange={handleChange} person={personInfo} />
 
-          <div className="school">
-
-            <form action="" onSubmit={handleSchoolSubmit}>
-
-              <div className="duration row">
-                <div className='input-wrapper '>
-                    <label htmlFor='education-from'>From</label>
-                    <input id="education-from" type="month"/>
-                </div>
-                <div className='input-wrapper '>
-                    <label htmlFor='education-to'>To</label>
-                    <input id="education-to" type="month"/>
-                </div>
-              </div>
-              <div className='input-wrapper '>
-                    <label htmlFor='certificate'>Certificate</label>
-                    <input id="certificate" type="text"/>
-              </div>
-
-              <div className='input-wrapper'>
-                    <label htmlFor='school name'>School</label>
-                    <input id="school" type="text"/>
-              </div>
-            
-            <button type="submit" >Add School</button>
-
-            </form>
-
-          </div>
-        </div>
+        {/* Education Form */}
+        <EducationForm handleSubmit={handleSchoolSubmit}/>
 
         {/* Experience Form */}
-        <div className="experience-info">
-            <h1>Professional Experience</h1>
-            <hr />
-
-            <div className="work">
-
-            <form action="">
-
-              <div className="duration row">
-                <div className='input-wrapper '>
-                    <label htmlFor='work-from'>From</label>
-                    <input id="work-from" type="month"/>
-                </div>
-                <div className='input-wrapper '>
-                    <label htmlFor='work-to'>To</label>
-                    <input id="work-to" type="month"/>
-                </div>
-              </div>
-              <div className='input-wrapper '>
-                    <label htmlFor='position'>Position</label>
-                    <input id="position" type="text"/>
-              </div>
-
-              <div className='input-wrapper'>
-                    <label htmlFor='company'>Company</label>
-                    <input id="coompany" type="text"/>
-              </div>
-
-
-            </form>
-
-          </div>
-        </div>
+       <XpForm title="Professional Experience" handleSubmit={handleXpSubmit}/> 
         
     </div>
+
+
+
     {/* CV  Section */}
 
     <div className="cv">
     
-    {/* Personal Information Section */}
-    <button onClick= {() => html2pdf(document.querySelector('.cv'),{ margin: 10, filename: 'your_document.pdf', pagebreak: { mode: 'css', } })}>Print</button>
+        {/* Personal Information Section */}
+        <button onClick= {() => html2pdf(document.querySelector('.cv'),{ margin: 10, filename: 'your_document.pdf', pagebreak: { mode: 'css', } })}>Print</button>
 
         <GeneralInfo person={personInfo}/>
-          <hr />
-
-
-        <ItemListView title="Education" items={schools} />
-
-        <section className="experience">
-          <h1>Experience</h1>
-            <div className="company-info">
-              <p>From - To</p>
-              <p>IT Support Intern</p>
-              <p>Radio Africa Group</p>
-            </div>
-            <hr />
-        </section>
-        <section className="experience">
-          <h1>Experience</h1>
-            <div className="company-info">
-              <p>From - To</p>
-              <p>IT Support Intern</p>
-              <p>Radio Africa Group</p>
-            </div>
-            <hr />
-        </section>
-        <section className="experience">
-          <h1>Experience</h1>
-            <div className="company-info">
-              <p>From - To</p>
-              <p>IT Support Intern</p>
-              <p>Radio Africa Group</p>
-            </div>
-            <hr />
-        </section>
-        <section className="experience">
-          <h1>Experience</h1>
-            <div className="company-info">
-              <p>From - To</p>
-              <p>IT Support Intern</p>
-              <p>Radio Africa Group</p>
-            </div>
-            <hr />
-        </section>
-        <section className="experience">
-          <h1>Experience</h1>
-            <div className="company-info">
-              <p>From - To</p>
-              <p>IT Support Intern</p>
-              <p>Radio Africa Group</p>
-            </div>
-            <hr />
-        </section>
-        <section className="experience">
-          <h1>Experience</h1>
-            <div className="company-info">
-              <p>From - To</p>
-              <p>IT Support Intern</p>
-              <p>Radio Africa Group</p>
-            </div>
-            <hr />
-        </section>
+        <hr />
+        <ItemListView title="Education" items={schools} type="school"/>
+        <ItemListView title="Experience" items={xps} type="xp"/>
+        
 
     </div>
       

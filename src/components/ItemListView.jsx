@@ -1,10 +1,9 @@
 import Item from './ItemView'
 import PropTypes from 'prop-types'
 
-function ItemListView({title,items}) {
+function ItemListView({title,items, type}) {
 
-    console.log(items)
- const ItemsView = items.length < 1 ?  `${title} no available` : items.map((itemObj) => <Item key={itemObj.id} item={itemObj} />) 
+ const ItemsView = items.length < 1 ?  `${title} no available` : items.map((itemObj) => <Item key={itemObj.id} item={itemObj} itemType={type} />) 
 
   return (
     <section className='education'>
@@ -16,6 +15,7 @@ function ItemListView({title,items}) {
 }
 
 ItemListView.propTypes = {
+    type:PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     items: PropTypes.array.isRequired
 }
