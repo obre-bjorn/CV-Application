@@ -2,24 +2,50 @@ import { useState } from 'react'
 import html2pdf from 'html2pdf.js'
 
 import GeneralInfoForm from './components/GeneralInfoForm';
+import GeneralInfo from './components/GeneralInfo';
+import ItemListView from './components/ItemListView';
+
+let schoolIndex = 0
+let xpIndex = 0
+
 
 function App() {
     const [schools,setSchools] = useState([])
-    const [personInfo,setPersonInfo] = useState({firstName:'', 
-                                                    lastName:'',
-                                                    email:'', 
-                                                    phoneNumber:'',
-                                                    website:'',
-                                                    description: ''
-                                                  });
+    const [personInfo,setPersonInfo] = useState({
+      firstName:'', 
+      lastName:'',
+       email:'', 
+      phoneNumber:'',
+      website:'',
+      description: ''
+    });                                             
 
     
                                                
 
  function handleSchoolSubmit(e){
+    const elements = e.target.elements
 
+    const formData = {
+      id: schoolIndex,
+      from: elements['education-from'].value,
+      to: elements['education-to'].value,
+      certificate: elements['certificate'].value,
+      school: elements['school'].value
+    }
 
-  
+    schoolIndex++
+    e.preventDefault()
+
+    setSchools((prevSchools) => [...prevSchools,formData])
+
+    
+    console.log(e.target.elements)
+    console.log(formData);
+    console.log('School Index', schoolIndex)
+    
+    e.target.reset()
+
  }
 
  function handleXpSubmit(){
@@ -52,7 +78,7 @@ function handleChange(e){
 
           <div className="school">
 
-            <form action="">
+            <form action="" onSubmit={handleSchoolSubmit}>
 
               <div className="duration row">
                 <div className='input-wrapper '>
@@ -73,7 +99,8 @@ function handleChange(e){
                     <label htmlFor='school name'>School</label>
                     <input id="school" type="text"/>
               </div>
-
+            
+            <button type="submit" >Add School</button>
 
             </form>
 
@@ -123,31 +150,11 @@ function handleChange(e){
     {/* Personal Information Section */}
     <button onClick= {() => html2pdf(document.querySelector('.cv'),{ margin: 10, filename: 'your_document.pdf', pagebreak: { mode: 'css', } })}>Print</button>
 
-        <section className='general-info'>
-          <div className="my-info row">
-            <div className="name">
-              <h1><b>{personInfo.firstName}</b></h1> 
-              <h1><b>{personInfo.lastName}</b></h1>
-            </div>
-            <div className="contacts">
-              <h3><b>Email:</b>{personInfo.email}</h3>
-              <h3><b>Phone Number:</b>{personInfo.phoneNumber}</h3>
-              <h3><b>Website:</b> <a href="#">{personInfo.website}</a></h3>
-            </div>
-          </div>
-          <p className="description">{personInfo.description} </p>
-        </section>
+        <GeneralInfo person={personInfo}/>
           <hr />
 
-        <section className='education'>
-          <h1>Education</h1>
-          <div className="school-info">
-            <p>From - To</p>
-            <p>Bachelor of Information Technology</p>
-            <p>Jomo Kenyatta University Of Agriculture</p>
-          </div>
-          <hr />
-        </section>
+
+        <ItemListView title="Education" items={schools} />
 
         <section className="experience">
           <h1>Experience</h1>
