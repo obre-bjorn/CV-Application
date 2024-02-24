@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 
-const ItemEditForm = ({itemType,school,handleDeleteSchool,handleEditSchool}) => {
+const ItemEditForm = ({itemType,school,handleDeleteItem,handleEditSchool}) => {
   
   const [schoolEdited,setSchoolEdited] = useState(school)
   const [xpEdited,setXpEdited] = useState(school)
@@ -60,7 +60,7 @@ const ItemEditForm = ({itemType,school,handleDeleteSchool,handleEditSchool}) => 
           <button id={`edit-${school.id}`} type="button" onClick= {() => handleEditSchool(itemEdited,itemType)} >
             Edit
             </button> &nbsp;
-          <button id={`delete-${school.id}`} type="button" onClick={() => handleDeleteSchool(school.id)}>
+          <button id={`delete-${school.id}`} type="button" onClick={() => handleDeleteItem(school,itemType)}>
             Delete
           </button>        
                 <br></br>
@@ -73,7 +73,7 @@ const ItemEditForm = ({itemType,school,handleDeleteSchool,handleEditSchool}) => 
 ItemEditForm.propTypes = {
     itemType: PropTypes.string,
     school: PropTypes.object,
-    handleDeleteSchool: PropTypes.func,
+    handleDeleteItem: PropTypes.func,
     handleEditSchool: PropTypes.func
 };
 

@@ -78,6 +78,31 @@ function App() {
   console.log('After Update:', schools);
 }
 
+function handleItemDelete( itemDeleted, type,){
+
+  if(type == "school"){
+      
+        setSchools((prevSchools) => {
+          const updatedSchools = prevSchools.filter((school) =>
+            itemDeleted.id !== school.id  
+          );
+      
+          return updatedSchools; 
+          
+        })
+    } else{
+        setXps((prevSchools) => {
+          const updatedSchools = prevSchools.filter((school) =>
+            itemDeleted.id != school.id  
+          );
+      
+          return updatedSchools; 
+          
+        })
+    }
+
+}
+
   function handleXpSubmit(e){
     const elements = e.target.elements
 
@@ -128,7 +153,7 @@ function handleChange(e){
         <>
         {console.log(schools)}
           <h1>Edit Schools</h1>
-          <ItemStateInstance itemType="school" schools={schools} handleEdit={handleItemEdit}/> 
+          <ItemStateInstance itemType="school" schools={schools} handleEdit={handleItemEdit} handleDelete={handleItemDelete}/> 
         
           </> : null
         }
@@ -138,7 +163,7 @@ function handleChange(e){
           xps.length > 0 ?
           <>
           <h1>Edit Experiences</h1>
-          <ItemStateInstance itemType="experience" schools={xps} handleEdit={handleItemEdit}/>
+          <ItemStateInstance itemType="experience" schools={xps} handleEdit={handleItemEdit} handleDelete={handleItemDelete}/>
           </>: 
           null
         }
