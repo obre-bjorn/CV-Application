@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import ItemStateInstance from './ItemStateInstance'
 
 function EducationForm({handleSubmit}) {
   return (
@@ -35,6 +36,7 @@ function EducationForm({handleSubmit}) {
             </form>
 
           </div>
+          
         </div>
 
   )

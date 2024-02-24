@@ -6,6 +6,7 @@ import GeneralInfo from './components/GeneralInfo';
 import ItemListView from './components/ItemListView';
 import EducationForm from './components/EducationForm';
 import XpForm from './components/XpForm';
+import ItemStateInstance from './components/ItemStateInstance';
 
 let schoolIndex = 0
 let xpIndex = 0
@@ -22,6 +23,7 @@ function App() {
       website:'',
       description: ''
     });                                             
+
 
     
                                                
@@ -45,6 +47,22 @@ function App() {
     e.target.reset()
 
  }
+
+ function handleItemEdit(editedSchool){
+  console.log('handleItemEdit (Edited School)', editedSchool)
+  
+  console.log('Before Update:', schools);
+
+  setSchools((prevSchools) => {
+    const updatedSchools = prevSchools.map((school) =>
+      editedSchool.id === school.id  ? editedSchool : school
+    );
+
+    return updatedSchools; 
+    
+  })
+  console.log('After Update:', schools);
+}
 
   function handleXpSubmit(e){
     const elements = e.target.elements
@@ -89,12 +107,24 @@ function handleChange(e){
         <GeneralInfoForm handleChange={handleChange} person={personInfo} />
 
         {/* Education Form */}
-        <EducationForm handleSubmit={handleSchoolSubmit}/>
+        <EducationForm handleSubmit=
+        {handleSchoolSubmit}/>
 
+        { schools.length > 0 ? 
+        <>
+        {console.log(schools)}
+          <h1>Edit Schools</h1>
+          <ItemStateInstance schools={schools} handleEdit={handleItemEdit}/> 
+        
+          </> : null
+        }
         {/* Experience Form */}
        <XpForm title="Professional Experience" handleSubmit={handleXpSubmit}/> 
         
     </div>
+
+
+
 
 
 
