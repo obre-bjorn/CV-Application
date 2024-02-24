@@ -48,19 +48,33 @@ function App() {
 
  }
 
- function handleItemEdit(editedSchool){
+ function handleItemEdit(editedSchool,type){
   console.log('handleItemEdit (Edited School)', editedSchool)
   
   console.log('Before Update:', schools);
 
-  setSchools((prevSchools) => {
-    const updatedSchools = prevSchools.map((school) =>
-      editedSchool.id === school.id  ? editedSchool : school
-    );
+    if(type == "school"){
+      
+        setSchools((prevSchools) => {
+          const updatedSchools = prevSchools.map((school) =>
+            editedSchool.id === school.id  ? editedSchool : school
+          );
+      
+          return updatedSchools; 
+          
+        })
+    } else{
+        setXps((prevSchools) => {
+          const updatedSchools = prevSchools.map((school) =>
+            editedSchool.id === school.id  ? editedSchool : school
+          );
+      
+          return updatedSchools; 
+          
+        })
+    }
 
-    return updatedSchools; 
-    
-  })
+
   console.log('After Update:', schools);
 }
 
@@ -114,13 +128,20 @@ function handleChange(e){
         <>
         {console.log(schools)}
           <h1>Edit Schools</h1>
-          <ItemStateInstance schools={schools} handleEdit={handleItemEdit}/> 
+          <ItemStateInstance itemType="school" schools={schools} handleEdit={handleItemEdit}/> 
         
           </> : null
         }
         {/* Experience Form */}
        <XpForm title="Professional Experience" handleSubmit={handleXpSubmit}/> 
-        
+        {
+          xps.length > 0 ?
+          <>
+          <h1>Edit Experiences</h1>
+          <ItemStateInstance itemType="experience" schools={xps} handleEdit={handleItemEdit}/>
+          </>: 
+          null
+        }
     </div>
 
 

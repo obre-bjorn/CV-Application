@@ -3,19 +3,32 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 
-const ItemEditForm = ({school,handleDeleteSchool,handleEditSchool}) => {
+const ItemEditForm = ({itemType,school,handleDeleteSchool,handleEditSchool}) => {
   
   const [schoolEdited,setSchoolEdited] = useState(school)
+  const [xpEdited,setXpEdited] = useState(school)
 
+
+  let itemEdited = itemType === "school" ? schoolEdited : xpEdited 
+
+  
   function handleEdit(e){
     
     const {name, value} = e.target
 
-    setSchoolEdited((prevSchoolEdited) => ({ ...prevSchoolEdited, [name] : value}))
 
-      console.log("Edited School ",schoolEdited)
+    if(itemType === "school"){
+      
+        setSchoolEdited((prevSchoolEdited) => ({ ...prevSchoolEdited, [name] : value}))
+    
+        
+    }else{
 
-  }
+      setXpEdited((prevSchoolEdited) => ({ ...prevSchoolEdited, [name] : value}))
+  
+        }
+      
+    }
     
     return (
        
@@ -36,15 +49,15 @@ const ItemEditForm = ({school,handleDeleteSchool,handleEditSchool}) => {
           <div className="input-wrapper">
             
             <label htmlFor={`certificate-${school.id}`} >certificate</label>
-            <input id={`certificate-${school.id}`} type="text" name="certificate" defaultValue={school.certificate} onChange={handleEdit}/>
+            <input id={`certificate-${school.id}`} type="text" name={itemType === 'school' ? "certificate" : "position"} defaultValue={itemType === 'school' ? school.certificate: school.position} onChange={handleEdit} />
           </div>       
             <div className="input-wrapper">
               
             <label htmlFor={`school-${school.id}`}>school</label>
-            <input id={`school-${school.id}`} type="text" name="school" defaultValue={school.school} onChange={handleEdit}/>
+            <input id={`school-${school.id}`} type="text" name={itemType === 'school' ? "school" : "company"} defaultValue={itemType === 'school' ? school.school: school.company} onChange={handleEdit}/>
             </div>   
 
-          <button id={`edit-${school.id}`} type="button" onClick= {() => handleEditSchool(schoolEdited) } >
+          <button id={`edit-${school.id}`} type="button" onClick= {() => handleEditSchool(itemEdited,itemType)} >
             Edit
             </button> &nbsp;
           <button id={`delete-${school.id}`} type="button" onClick={() => handleDeleteSchool(school.id)}>
@@ -58,6 +71,7 @@ const ItemEditForm = ({school,handleDeleteSchool,handleEditSchool}) => {
 
 
 ItemEditForm.propTypes = {
+    itemType: PropTypes.string,
     school: PropTypes.object,
     handleDeleteSchool: PropTypes.func,
     handleEditSchool: PropTypes.func
